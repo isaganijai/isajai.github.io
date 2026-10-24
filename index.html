@@ -249,6 +249,10 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .shot.c { background: var(--g3); }
 .shot img, .shot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .yt { text-align: center; margin: 1.75rem 0 0; }
+.shot-link { position: absolute; inset: 0; z-index: 3; border-radius: inherit; }
+.shot-link:focus-visible { outline-offset: -4px; }
+.shot .watch { margin-top: 0.4rem; color: var(--accent); font-weight: 500; }
+.shot.has .watch { color: #fff; font-weight: 600; }
 .shot > div { position: relative; z-index: 2; min-width: 0; }
 .shot.has::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.6)); }
 .shot.has b { color: #fff; }
@@ -512,7 +516,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
         <div class="shot c" data-img="images/gallery-3.jpg" data-alt="Action" data-video="images/gallery-3.mp4"><div><b>Action</b><span>Photo and video</span></div></div>
         <div class="shot b" data-img="images/gallery-4.jpg" data-alt="Moments" data-video="images/gallery-4.mp4"><div><b>Moments</b><span>Photo and video</span></div></div>
         <div class="shot c" data-img="images/gallery-5.jpg" data-alt="Memories" data-video="images/gallery-5.mp4"><div><b>Memories</b><span>Photo and video</span></div></div>
-        <div class="shot a" data-img="images/gallery-6.jpg" data-alt="My work" data-video="images/gallery-6.mp4"><div><b>My work</b><span>Recorded, mixed and filmed by me</span></div></div>
+        <div class="shot a" data-img="images/gallery-6.jpg" data-alt="My work" data-video="images/gallery-6.mp4"><div><b>My work</b><span>Recorded, mixed and filmed by me</span><span class="watch">Watch the full video &rsaquo;</span></div><a class="shot-link" href="https://youtu.be/Dp02hNCa5cQ" target="_blank" rel="noopener" aria-label="Watch the full video on YouTube"></a></div>
       </div>
       <div class="ctrl">
         <button class="arrow" id="prev" type="button" aria-label="Previous photo">&lsaquo;</button>
