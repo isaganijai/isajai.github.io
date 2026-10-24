@@ -201,10 +201,11 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .term .ok { color: var(--term-ok); }
 .caption { margin: 0.9rem auto 0; max-width: 42rem; text-align: center; color: var(--muted); font-size: 0.8125rem; }
 .rows { list-style: none; margin: 4.5rem 0 0; padding: 0; }
-.rows li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.25rem 2rem; padding-block: 1.1rem; border-top: 1px solid var(--line); }
+.rows li { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); align-items: baseline; gap: 0.25rem 2rem; padding-block: 1.1rem; border-top: 1px solid var(--line); }
 .rows li:last-child { border-bottom: 1px solid var(--line); }
 .rows strong { font-weight: 600; }
-.rows span { color: var(--muted); font-size: 0.9375rem; max-width: 34rem; }
+.rows span { color: var(--muted); font-size: 0.9375rem; text-align: left; }
+@media (max-width: 640px) { .rows li { grid-template-columns: minmax(0, 1fr); } }
 
 /* Music */
 .wave { display: flex; align-items: center; gap: 3px; height: 6rem; margin-top: 4rem; }
