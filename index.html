@@ -29,7 +29,8 @@
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 }
-@media (prefers-color-scheme: dark) {
+/* Dark is the default look. Only an explicit choice of the light theme switches it off. */
+@media all {
   :root:not([data-theme="light"]) {
     --bg: #000000;
     --bg-alt: #1d1d1f;
@@ -108,7 +109,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
   border-bottom: 1px solid var(--line);
 }
 .nav .in { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; height: 3rem; }
-.nav .brand { flex-shrink: 0; color: var(--fg); font-weight: 600; font-size: 0.9375rem; }
+.nav .brand { flex-shrink: 0; color: var(--fg); font-weight: 400; font-size: 0.9375rem; }
 .nav .brand:hover { text-decoration: none; }
 .links { display: flex; gap: 1.5rem; overflow-x: auto; white-space: nowrap; scrollbar-width: none; min-width: 0; }
 .links::-webkit-scrollbar { display: none; }
@@ -128,7 +129,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .hero .lead { margin: 1.5rem auto 0; max-width: 36rem; font-size: clamp(1.1rem, 2.5vw, 1.4rem); line-height: 1.45; color: var(--muted); text-wrap: pretty; }
 /* Hero headline gradient: soft blue to violet to rose, brighter in dark mode. It drifts slowly unless the visitor prefers reduced motion. */
 :root { --w1: #0a6cff; --w2: #7b5cf0; --w3: #e0558a; --grad: linear-gradient(100deg, var(--w1) 0%, var(--w2) 50%, var(--w3) 100%); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --w1: #5ac8fa; --w2: #b794ff; --w3: #ff9bb5; } }
+:root:not([data-theme="light"]) { --w1: #5ac8fa; --w2: #b794ff; --w3: #ff9bb5; }
 :root[data-theme="dark"] { --w1: #5ac8fa; --w2: #b794ff; --w3: #ff9bb5; }
 .hero h1, .head h2 { color: var(--fg); background-image: var(--grad); background-size: 150% 100%; background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 /* Section headings start slightly low and dim, then rise and sweep their gradient each time they scroll into view, in either direction. The script adds .rv, so without it the headings simply sit in place. */
@@ -136,7 +137,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .head h2.rv { opacity: 0.35; transform: translateY(14px); background-position: 100% 50%; transition: opacity 1.5s cubic-bezier(0.25, 0.6, 0.25, 1), transform 1.5s cubic-bezier(0.25, 0.6, 0.25, 1), background-position 2.8s ease; }
 .head h2.rv.seen { opacity: 1; transform: none; background-position: 0% 50%; }
 /* Your name above the headline: larger and in full text color instead of the muted label style. */
-.hero .eyebrow { font-size: 1.5rem; letter-spacing: -0.01em; color: var(--fg); margin-bottom: 1rem; }
+.hero .eyebrow { font-size: 1.5rem; font-weight: 400; letter-spacing: -0.01em; color: var(--fg); margin-bottom: 1rem; }
 
 /* Hero entrance: the name and headline rise in one after another when the page opens and again whenever the visitor scrolls back to the top. */
 .hero.rvh .eyebrow, .hero.rvh h1 { opacity: 0.35; transform: translateY(14px); transition: opacity 1.5s cubic-bezier(0.25, 0.6, 0.25, 1), transform 1.5s cubic-bezier(0.25, 0.6, 0.25, 1); }
@@ -243,7 +244,8 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .shot.a { background: var(--g1); }
 .shot.b { background: var(--g2); }
 .shot.c { background: var(--g3); }
-.shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.shot img, .shot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.yt { text-align: center; margin: 1.75rem 0 0; }
 .shot > div { position: relative; z-index: 2; min-width: 0; }
 .shot.has::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.6)); }
 .shot.has b { color: #fff; }
@@ -256,6 +258,9 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .mail #email { font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 600; letter-spacing: -0.02em; overflow-wrap: anywhere; }
 .copy { font: inherit; font-size: 0.9375rem; font-weight: 500; color: var(--accent); background: none; border: 1px solid var(--accent); border-radius: 999px; padding: 0.35rem 1rem; cursor: pointer; }
 .copy:hover { background: var(--accent); color: #fff; }
+.phone { text-align: center; margin: 0.5rem 0 0; font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 600; letter-spacing: -0.02em; }
+.phone a { color: var(--fg); }
+.phone a:hover { color: var(--accent); }
 .status { text-align: center; min-height: 1.3em; margin: 0.6rem 0 0; color: var(--muted); font-size: 0.8125rem; }
 /* Two columns side by side: the kinds of work on the left, profile links on the right. */
 .reach { display: grid; grid-template-columns: repeat(2, minmax(0, 17rem)); justify-content: center; gap: 2rem 5rem; margin-top: 2.5rem; text-align: left; }
@@ -499,18 +504,19 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
       </div>
 
       <div class="slides" id="slides" tabindex="0" aria-label="Photo and video slideshow">
-        <div class="shot a" data-img="images/gallery-1.jpg" data-alt="Concert photograph"><div><b>Concerts</b><span>Photography</span></div></div>
-        <div class="shot b" data-img="images/gallery-2.jpg" data-alt="Portrait photograph"><div><b>Portraits</b><span>Photography</span></div></div>
-        <div class="shot c" data-img="images/gallery-3.jpg" data-alt="Event photograph"><div><b>Events</b><span>Photo and video</span></div></div>
-        <div class="shot b" data-img="images/gallery-4.jpg" data-alt="Still from a short film"><div><b>Short films</b><span>Video</span></div></div>
-        <div class="shot c" data-img="images/gallery-5.jpg" data-alt="Still from a music video"><div><b>Music videos</b><span>Video</span></div></div>
-        <div class="shot a" data-img="images/gallery-6.jpg" data-alt="Behind the scenes"><div><b>Behind the scenes</b><span>Photo and video</span></div></div>
+        <div class="shot a" data-img="images/gallery-1.jpg" data-alt="Everyday moment" data-video="images/gallery-1.mp4"><div><b>Everyday</b><span>Photo and video</span></div></div>
+        <div class="shot b" data-img="images/gallery-2.jpg" data-alt="Travel" data-video="images/gallery-2.mp4"><div><b>Travel</b><span>Photo and video</span></div></div>
+        <div class="shot c" data-img="images/gallery-3.jpg" data-alt="Action" data-video="images/gallery-3.mp4"><div><b>Action</b><span>Photo and video</span></div></div>
+        <div class="shot b" data-img="images/gallery-4.jpg" data-alt="Moments" data-video="images/gallery-4.mp4"><div><b>Moments</b><span>Photo and video</span></div></div>
+        <div class="shot c" data-img="images/gallery-5.jpg" data-alt="Memories" data-video="images/gallery-5.mp4"><div><b>Memories</b><span>Photo and video</span></div></div>
+        <div class="shot a" data-img="images/gallery-6.jpg" data-alt="Behind the scenes" data-video="images/gallery-6.mp4"><div><b>Behind the scenes</b><span>Photo and video</span></div></div>
       </div>
       <div class="ctrl">
         <button class="arrow" id="prev" type="button" aria-label="Previous photo">&lsaquo;</button>
         <div class="dots" id="dots"></div>
         <button class="arrow" id="next" type="button" aria-label="Next photo">&rsaquo;</button>
       </div>
+      <p class="yt"><a class="pill ghost" href="https://www.youtube.com/@izyjai" target="_blank" rel="noopener">Watch the full videos on YouTube</a></p>
 
       <div class="cols">
         <div class="col">
@@ -545,6 +551,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
         <span id="email">isajai@icloud.com</span>
         <button class="copy" id="copy-email" type="button">Copy address</button>
       </p>
+      <p class="phone"><a href="tel:+13184619904">(318) 461-9904</a></p>
       <p class="status" id="copy-status" role="status" aria-live="polite"></p>
       <div class="reach">
         <div class="reach-col">
@@ -554,6 +561,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
         <li>Live sound</li>
         <li>Music sessions</li>
         <li>Photo and video</li>
+        <li>Video editing</li>
       </ul>
         </div>
         <div class="reach-col">
@@ -563,6 +571,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
         <a href="https://www.linkedin.com/in/isajai" target="_blank" rel="noopener">linkedin.com/in/isajai</a>
         <a href="https://www.instagram.com/lensrune" target="_blank" rel="noopener">instagram.com/lensrune</a>
         <a href="https://www.facebook.com/botzyokbowtch" target="_blank" rel="noopener">facebook.com/botzyokbowtch</a>
+        <a href="https://www.youtube.com/@izyjai" target="_blank" rel="noopener">youtube.com/@izyjai</a>
       </p>
         </div>
       </div>
@@ -588,7 +597,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
   function isDark() {
     var set = root.getAttribute('data-theme');
     if (set) return set === 'dark';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return true;
   }
   document.getElementById('theme-toggle').addEventListener('click', function () {
     var next = isDark() ? 'light' : 'dark';
@@ -614,6 +623,38 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
     new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { e.target.classList.toggle('seen', e.isIntersecting); });
     }, { threshold: 0.4 }).observe(heroEl);
+  }
+
+  var clipsStill = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!clipsStill) {
+    var clipWatcher = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          var p = e.target.play();
+          if (p && p.catch) p.catch(function () {});
+        } else {
+          e.target.pause();
+        }
+      });
+    }, { threshold: 0.5 }) : null;
+    document.querySelectorAll('[data-video]').forEach(function (el) {
+      var v = document.createElement('video');
+      v.muted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.preload = 'metadata';
+      v.setAttribute('muted', '');
+      v.setAttribute('playsinline', '');
+      v.setAttribute('aria-hidden', 'true');
+      v.poster = el.getAttribute('data-img') || '';
+      v.addEventListener('loadedmetadata', function () {
+        el.insertBefore(v, el.querySelector('div'));
+        el.classList.add('has');
+        if (clipWatcher) clipWatcher.observe(v);
+        else { var q = v.play(); if (q && q.catch) q.catch(function () {}); }
+      });
+      v.src = el.getAttribute('data-video');
+    });
   }
 
   var headings = document.querySelectorAll('.head h2');
