@@ -226,6 +226,9 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 /* Slideshow: one photo at a time, swipe or use the arrows. */
 .slides { position: relative; display: flex; gap: 0.75rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-top: 4rem; border-radius: 18px; }
 .slides::-webkit-scrollbar { display: none; }
+/* Going past the last slide (or before the first) fades out, jumps, and fades back in, instead of scrolling past every slide. */
+.slides { transition: opacity 0.25s ease; }
+.slides.fading { opacity: 0; }
 .slides .shot { flex: 0 0 100%; scroll-snap-align: center; aspect-ratio: 16 / 8; padding: 1.5rem; }
 .slides .shot b { font-size: 1.25rem; }
 .ctrl { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.1rem; }
@@ -689,8 +692,18 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
     }
   }
   function go(n) {
+    var wrapped = n < 0 || n >= items.length;
     index = (n + items.length) % items.length;
-    slides.scrollTo({ left: items[index].offsetLeft, behavior: still ? 'auto' : 'smooth' });
+    var target = items[index].offsetLeft;
+    if (wrapped && !still) {
+      slides.classList.add('fading');
+      setTimeout(function () {
+        slides.scrollTo({ left: target, behavior: 'auto' });
+        slides.classList.remove('fading');
+      }, 250);
+    } else {
+      slides.scrollTo({ left: target, behavior: still ? 'auto' : 'smooth' });
+    }
     paintDots();
   }
   document.getElementById('prev').addEventListener('click', function () { go(index - 1); });
