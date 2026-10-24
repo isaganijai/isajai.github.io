@@ -126,6 +126,25 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .hero { padding-block: 6rem 4.5rem; text-align: center; }
 .hero h1 { margin: 0 auto; max-width: 15ch; font-size: clamp(2.75rem, 9vw, 5.5rem); line-height: 1.03; font-weight: 700; letter-spacing: -0.035em; text-wrap: balance; }
 .hero .lead { margin: 1.5rem auto 0; max-width: 36rem; font-size: clamp(1.1rem, 2.5vw, 1.4rem); line-height: 1.45; color: var(--muted); text-wrap: pretty; }
+/* Hero headline gradient: soft blue to violet to rose, brighter in dark mode. It drifts slowly unless the visitor prefers reduced motion. */
+:root { --w1: #0a6cff; --w2: #7b5cf0; --w3: #e0558a; --grad: linear-gradient(100deg, var(--w1) 0%, var(--w2) 50%, var(--w3) 100%); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --w1: #5ac8fa; --w2: #b794ff; --w3: #ff9bb5; } }
+:root[data-theme="dark"] { --w1: #5ac8fa; --w2: #b794ff; --w3: #ff9bb5; }
+.hero h1, .head h2 { color: var(--fg); background-image: var(--grad); background-size: 150% 100%; background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+/* Section headings start slightly low and dim, then rise and sweep their gradient each time they scroll into view, in either direction. The script adds .rv, so without it the headings simply sit in place. */
+.head h2 { background-size: 220% 100%; background-position: 0% 50%; }
+.head h2.rv { opacity: 0.35; transform: translateY(14px); background-position: 100% 50%; transition: opacity 1.5s cubic-bezier(0.25, 0.6, 0.25, 1), transform 1.5s cubic-bezier(0.25, 0.6, 0.25, 1), background-position 2.8s ease; }
+.head h2.rv.seen { opacity: 1; transform: none; background-position: 0% 50%; }
+/* Your name above the headline: larger and in full text color instead of the muted label style. */
+.hero .eyebrow { font-size: 1.5rem; letter-spacing: -0.01em; color: var(--fg); margin-bottom: 1rem; }
+
+/* Hero entrance: the name and headline rise in one after another when the page opens and again whenever the visitor scrolls back to the top. */
+.hero.rvh .eyebrow, .hero.rvh h1 { opacity: 0.35; transform: translateY(14px); transition: opacity 1.5s cubic-bezier(0.25, 0.6, 0.25, 1), transform 1.5s cubic-bezier(0.25, 0.6, 0.25, 1); }
+.hero.rvh.seen .eyebrow, .hero.rvh.seen h1 { opacity: 1; transform: none; }
+.hero.rvh.seen h1 { transition-delay: 0.15s; }
+@media (prefers-reduced-motion: no-preference) { .hero h1 { animation: drift 26s ease-in-out infinite alternate; } }
+@keyframes drift { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+
 /* Typing line: the full sentence stays in the page for screen readers and for visitors who prefer reduced motion. */
 .typed-line { position: relative; min-height: 1.45em; }
 .typed-line .anim-only { display: none; }
@@ -133,7 +152,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .typed-line.anim .static { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .typed { color: var(--fg); }
 .caret { display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -0.12em; background: var(--accent); }
-@media (prefers-reduced-motion: no-preference) { .caret { animation: blink 1.05s steps(1) infinite; } }
+@media (prefers-reduced-motion: no-preference) { .caret { animation: blink 1.4s steps(1) infinite; } }
 @keyframes blink { 50% { opacity: 0; } }
 @media (max-width: 520px) { .typed-line { min-height: 2.9em; } }
 .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem 1rem; margin-top: 2rem; }
@@ -156,7 +175,9 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 @media (max-width: 760px) { .ph { aspect-ratio: 4 / 3; margin-top: 3rem; } .hero-photo .ph { margin-top: 0; } }
 
 /* Overview tiles */
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; padding-bottom: 6rem; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; padding-bottom: 6rem; }
+@media (max-width: 899px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .tiles { grid-template-columns: minmax(0, 1fr); } }
 .tile { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.75rem; border-radius: 24px; background: var(--bg-alt); color: var(--fg); min-width: 0; }
 .tile:hover { text-decoration: none; }
 .tile h3 { margin: 0; font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
@@ -165,7 +186,8 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .tile:hover .more { text-decoration: underline; text-underline-offset: 0.2em; }
 
 /* Shared detail grids */
-.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); gap: 2.5rem 2rem; margin-top: 4.5rem; }
+.cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.5rem 2rem; margin-top: 4.5rem; }
+@media (max-width: 899px) { .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.25rem; } }
 .col { border-top: 1px solid var(--line); padding-top: 1rem; min-width: 0; }
 .col h3 { margin: 0 0 0.6rem; font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; }
 .col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; color: var(--muted); font-size: 0.9375rem; }
@@ -235,8 +257,16 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .copy { font: inherit; font-size: 0.9375rem; font-weight: 500; color: var(--accent); background: none; border: 1px solid var(--accent); border-radius: 999px; padding: 0.35rem 1rem; cursor: pointer; }
 .copy:hover { background: var(--accent); color: #fff; }
 .status { text-align: center; min-height: 1.3em; margin: 0.6rem 0 0; color: var(--muted); font-size: 0.8125rem; }
-.avail { list-style: none; margin: 2.5rem 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.75rem; color: var(--muted); font-size: 0.9375rem; }
-.handles { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.75rem; margin: 1.5rem 0 0; color: var(--muted); }
+/* Two columns side by side: the kinds of work on the left, profile links on the right. */
+.reach { display: grid; grid-template-columns: repeat(2, minmax(0, 17rem)); justify-content: center; gap: 2rem 5rem; margin-top: 2.5rem; text-align: left; }
+.reach-col { min-width: 0; }
+.reach-h { margin: 0 0 0.75rem; font-family: var(--mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.avail, .handles { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; color: var(--muted); font-family: var(--font); font-size: 0.9375rem; line-height: 1.5; }
+@media (max-width: 560px) { .reach { grid-template-columns: minmax(0, 1fr); text-align: center; } }
+
+.avail li { min-width: 0; }
+
+
 .handles a { color: var(--muted); overflow-wrap: anywhere; }
 .handles a:hover { color: var(--accent); }
 
@@ -279,7 +309,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
     <div class="in">
       <p class="eyebrow">Isagani Jainar</p>
       <h1>Protect it. Mix it. Play it. Shoot it.</h1>
-      <p class="lead typed-line" id="typed-line"><span class="static">Cybersecurity and IT graduate, sound engineer, guitarist and singer, photographer and videographer.</span><span class="anim-only" aria-hidden="true">Isagani is a <span class="typed" id="typed"></span><span class="caret"></span></span></p>
+      <p class="lead typed-line" id="typed-line"><span class="static">Computer science graduate with a cybersecurity and IT focus, sound engineer, guitarist and singer, photographer and videographer.</span><span class="anim-only" aria-hidden="true">Isagani is a <span class="typed" id="typed"></span><span class="caret"></span></span></p>
       <div class="cta">
         <a class="pill solid" href="#security">See the work</a>
         <a class="pill ghost" href="#contact">Get in touch</a>
@@ -293,25 +323,25 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 
   <section class="in tiles" aria-label="Disciplines">
     <a class="tile" href="#security">
-      <p class="mono" style="margin:0;color:var(--muted)">01 Technology</p>
+      <p class="mono" style="margin:0;color:var(--muted)">Technology</p>
       <h3>Security and IT</h3>
       <p>Defend networks, fix problems and keep users working.</p>
       <span class="more">Learn more &rsaquo;</span>
     </a>
     <a class="tile" href="#music">
-      <p class="mono" style="margin:0;color:var(--muted)">02 Performance</p>
+      <p class="mono" style="margin:0;color:var(--muted)">Performance</p>
       <h3>Guitar and voice</h3>
       <p>Live sets, sessions and events with real feeling.</p>
       <span class="more">Learn more &rsaquo;</span>
     </a>
     <a class="tile" href="#sound">
-      <p class="mono" style="margin:0;color:var(--muted)">03 Live audio</p>
+      <p class="mono" style="margin:0;color:var(--muted)">Live audio</p>
       <h3>Sound engineer</h3>
       <p>Clear mixes that make every seat the best seat.</p>
       <span class="more">Learn more &rsaquo;</span>
     </a>
     <a class="tile" href="#visual">
-      <p class="mono" style="margin:0;color:var(--muted)">04 Image</p>
+      <p class="mono" style="margin:0;color:var(--muted)">Image</p>
       <h3>Photo and video</h3>
       <p>Shot, edited and color graded from start to finish.</p>
       <span class="more">Learn more &rsaquo;</span>
@@ -328,16 +358,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 
       <div class="ph" data-img="images/security.jpg" data-alt="Security and IT work"><div class="hint" aria-hidden="true"><b>Security and IT photo</b><span>images/security.jpg</span></div></div>
 
-      <div class="term" role="img" aria-label="Example network scan output">
-<pre><span class="dim">$</span> nmap -sV 10.0.0.0/24
-<span class="dim">Scanning 254 hosts</span>
-10.0.0.1    22/tcp   open  ssh     OpenSSH 9.6
-10.0.0.1    443/tcp  open  https   nginx 1.24
-10.0.0.20   445/tcp  open  smb     Windows Server 2022
-<span class="ok">3 services found, 1 flagged for review</span></pre>
-      </div>
-      <p class="caption">Example output from a lab network.</p>
-
+      
       <div class="cols">
         <div class="col">
           <h3>Security</h3>
@@ -431,14 +452,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 
       <div class="ph" data-img="images/sound.jpg" data-alt="Mixing at the sound console"><div class="hint" aria-hidden="true"><b>Sound engineer photo</b><span>images/sound.jpg</span></div></div>
 
-      <ol class="chain" aria-label="Signal chain">
-        <li><strong>Source</strong><span>Vocals, guitars, drums</span></li>
-        <li><strong>Stage box</strong><span>Mics and DI boxes patched</span></li>
-        <li><strong>Console</strong><span>Gain, EQ, dynamics, mix</span></li>
-        <li><strong>Processing</strong><span>Delay, system EQ, limiting</span></li>
-        <li><strong>PA and monitors</strong><span>What the room and the band hear</span></li>
-      </ol>
-
+      
       <div class="cols">
         <div class="col">
           <h3>Mixing</h3>
@@ -532,18 +546,26 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
         <button class="copy" id="copy-email" type="button">Copy address</button>
       </p>
       <p class="status" id="copy-status" role="status" aria-live="polite"></p>
+      <div class="reach">
+        <div class="reach-col">
+          <h3 class="reach-h">Open to</h3>
       <ul class="avail">
         <li>IT and security roles</li>
         <li>Live sound</li>
-        <li>Shows and sessions</li>
-        <li>Photo and video shoots</li>
+        <li>Music sessions</li>
+        <li>Photo and video</li>
       </ul>
+        </div>
+        <div class="reach-col">
+          <h3 class="reach-h">Find me online</h3>
       <p class="handles mono">
         <a href="https://github.com/isaganijai" target="_blank" rel="noopener">github.com/isaganijai</a>
         <a href="https://www.linkedin.com/in/isajai" target="_blank" rel="noopener">linkedin.com/in/isajai</a>
         <a href="https://www.instagram.com/lensrune" target="_blank" rel="noopener">instagram.com/lensrune</a>
         <a href="https://www.facebook.com/botzyokbowtch" target="_blank" rel="noopener">facebook.com/botzyokbowtch</a>
       </p>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -583,6 +605,28 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
     };
     img.src = el.getAttribute('data-img');
   });
+
+  var heroEl = document.querySelector('.hero');
+  var calmHero = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && heroEl && !calmHero) {
+    heroEl.classList.add('rvh');
+    void heroEl.offsetWidth;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.target.classList.toggle('seen', e.isIntersecting); });
+    }, { threshold: 0.4 }).observe(heroEl);
+  }
+
+  var headings = document.querySelectorAll('.head h2');
+  var calmHeads = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !calmHeads) {
+    var headObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) e.target.classList.add('seen');
+        else e.target.classList.remove('seen');
+      });
+    }, { threshold: 0.35 });
+    headings.forEach(function (h) { h.classList.add('rv'); headObserver.observe(h); });
+  }
 
   var slides = document.getElementById('slides');
   var items = slides.querySelectorAll('.shot');
@@ -627,7 +671,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 
   var line = document.getElementById('typed-line');
   var typed = document.getElementById('typed');
-  var roles = ['cybersecurity and IT graduate', 'sound engineer', 'guitarist and singer', 'photographer and videographer'];
+  var roles = ['computer science graduate', 'sound engineer', 'guitarist and singer', 'photographer and videographer'];
   var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!calm) {
     line.classList.add('anim');
@@ -639,15 +683,15 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
       if (!deleting) {
         c++;
         typed.textContent = word.slice(0, c);
-        if (c === word.length) { deleting = true; delay = 1900; } else { delay = 55; }
+        if (c === word.length) { deleting = true; delay = 2600; } else { delay = 65; }
       } else {
         c--;
         typed.textContent = word.slice(0, c);
-        if (c === 0) { deleting = false; r = (r + 1) % roles.length; delay = 350; } else { delay = 28; }
+        if (c === 0) { deleting = false; r = (r + 1) % roles.length; delay = 550; } else { delay = 35; }
       }
       setTimeout(tick, delay);
     };
-    setTimeout(tick, 2200);
+    setTimeout(tick, 2800);
   }
 
   var wave = document.getElementById('wave');
@@ -659,9 +703,13 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
       var r = Math.abs(Math.sin(i * 12.9898) * 43758.5453) % 1;
       var h = Math.round(14 + env * 62 + r * 20);
       var o = (0.45 + env * 0.5).toFixed(2);
-      var dur = (1.1 + r * 0.9).toFixed(2);
-      var delay = (-(i * 0.07) % 2).toFixed(2);
-      html += '<i style="height:' + h + '%;opacity:' + o + ';--dur:' + dur + 's;--delay:' + delay + 's"></i>';
+      var dur = (2.6 + r * 2).toFixed(2);
+      var delay = (-(i * 0.14) % 5).toFixed(2);
+      var t = count > 1 ? i / (count - 1) : 0;
+      var col = t < 0.5
+        ? 'color-mix(in srgb, var(--w2) ' + Math.round(t * 200) + '%, var(--w1))'
+        : 'color-mix(in srgb, var(--w3) ' + Math.round((t - 0.5) * 200) + '%, var(--w2))';
+      html += '<i style="height:' + h + '%;opacity:' + o + ';background:' + col + ';--dur:' + dur + 's;--delay:' + delay + 's"></i>';
     }
     wave.innerHTML = html;
   }
