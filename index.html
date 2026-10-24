@@ -236,7 +236,9 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .copy:hover { background: var(--accent); color: #fff; }
 .status { text-align: center; min-height: 1.3em; margin: 0.6rem 0 0; color: var(--muted); font-size: 0.8125rem; }
 .avail { list-style: none; margin: 2.5rem 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.75rem; color: var(--muted); font-size: 0.9375rem; }
-.handles { text-align: center; margin: 1.5rem 0 0; color: var(--muted); }
+.handles { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.75rem; margin: 1.5rem 0 0; color: var(--muted); }
+.handles a { color: var(--muted); overflow-wrap: anywhere; }
+.handles a:hover { color: var(--accent); }
 
 /* Footer */
 .foot { padding-block: 1.75rem 2.5rem; color: var(--muted); font-size: 0.8125rem; }
@@ -277,7 +279,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
     <div class="in">
       <p class="eyebrow">Isagani Jainar</p>
       <h1>Protect it. Mix it. Play it. Shoot it.</h1>
-      <p class="lead typed-line" id="typed-line"><span class="static">Cybersecurity and IT graduate, Sound Engineer, Guitarist and Singer, Photographer and Videographer.</span><span class="anim-only" aria-hidden="true">Isagani is a <span class="typed" id="typed"></span><span class="caret"></span></span></p>
+      <p class="lead typed-line" id="typed-line"><span class="static">Cybersecurity and IT graduate, front of house engineer, guitarist and singer, photographer and videographer.</span><span class="anim-only" aria-hidden="true">Isagani is a <span class="typed" id="typed"></span><span class="caret"></span></span></p>
       <div class="cta">
         <a class="pill solid" href="#security">See the work</a>
         <a class="pill ghost" href="#contact">Get in touch</a>
@@ -526,7 +528,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
       </div>
       <div class="ph" data-img="images/contact.jpg" data-alt="Isagani Jainar at work"><div class="hint" aria-hidden="true"><b>Contact photo</b><span>images/contact.jpg</span></div></div>
       <p class="mail">
-        <span id="email">you@example.com</span>
+        <span id="email">isajai@icloud.com</span>
         <button class="copy" id="copy-email" type="button">Copy address</button>
       </p>
       <p class="status" id="copy-status" role="status" aria-live="polite"></p>
@@ -536,7 +538,12 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
         <li>Shows and sessions</li>
         <li>Photo and video shoots</li>
       </ul>
-      <p class="handles mono">github.com/your-handle &nbsp;·&nbsp; linkedin.com/in/your-handle &nbsp;·&nbsp; instagram.com/your-handle</p>
+      <p class="handles mono">
+        <a href="https://github.com/isajai" target="_blank" rel="noopener">github.com/isajai</a>
+        <a href="https://www.linkedin.com/in/isagani-jainar" target="_blank" rel="noopener">linkedin.com/in/isagani-jainar</a>
+        <a href="https://www.instagram.com/lensrune" target="_blank" rel="noopener">instagram.com/lensrune</a>
+        <a href="https://www.facebook.com/botzyokbowtch" target="_blank" rel="noopener">facebook.com/botzyokbowtch</a>
+      </p>
     </div>
   </section>
 </main>
