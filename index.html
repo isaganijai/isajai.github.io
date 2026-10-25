@@ -26,7 +26,8 @@
   --fg: #1d1d1f;
   --muted: #6e6e73;
   --line: #d2d2d7;
-  --accent: #0066cc;
+  --accent: #1d1d1f;
+  --on-accent: #ffffff;
   --nav: rgba(251, 251, 253, 0.82);
   --term-bg: #1d1d1f;
   --term-fg: #f5f5f7;
@@ -46,7 +47,8 @@
     --fg: #f5f5f7;
     --muted: #a1a1a6;
     --line: #38383d;
-    --accent: #2997ff;
+    --accent: #f5f5f7;
+    --on-accent: #000000;
     --nav: rgba(0, 0, 0, 0.72);
     --term-bg: #0a0a0b;
     --g1: linear-gradient(145deg, #1f2a37, #10161e);
@@ -61,7 +63,8 @@
   --fg: #f5f5f7;
   --muted: #a1a1a6;
   --line: #38383d;
-  --accent: #2997ff;
+  --accent: #f5f5f7;
+  --on-accent: #000000;
   --nav: rgba(0, 0, 0, 0.72);
   --term-bg: #0a0a0b;
   --g1: linear-gradient(145deg, #1f2a37, #10161e);
@@ -137,9 +140,9 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .hero h1 { margin: 0 auto; max-width: 15ch; font-size: clamp(2.75rem, 9vw, 5.5rem); line-height: 1.03; font-weight: 700; letter-spacing: -0.035em; text-wrap: balance; }
 .hero .lead { margin: 1.5rem auto 0; max-width: 36rem; font-size: clamp(1.1rem, 2.5vw, 1.4rem); line-height: 1.45; color: var(--muted); text-wrap: pretty; }
 /* Hero headline gradient: soft blue to violet to rose, brighter in dark mode. It drifts slowly unless the visitor prefers reduced motion. */
-:root { --w1: #0a6cff; --w2: #7b5cf0; --w3: #e0558a; --grad: linear-gradient(100deg, var(--w1) 0%, var(--w2) 50%, var(--w3) 100%); }
-:root:not([data-theme="light"]) { --w1: #5ac8fa; --w2: #b794ff; --w3: #ff9bb5; }
-:root[data-theme="dark"] { --w1: #5ac8fa; --w2: #b794ff; --w3: #ff9bb5; }
+:root { --w1: #1d1d1f; --w2: #5b6272; --w3: #9aa2b4; --grad: linear-gradient(100deg, var(--w1) 0%, var(--w2) 50%, var(--w3) 100%); }
+:root:not([data-theme="light"]) { --w1: #ffffff; --w2: #c9ccd6; --w3: #8b93a7; }
+:root[data-theme="dark"] { --w1: #ffffff; --w2: #c9ccd6; --w3: #8b93a7; }
 .hero h1, .head h2 { color: var(--fg); background-image: var(--grad); background-size: 150% 100%; background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 /* Section headings start slightly low and dim, then rise and sweep their gradient each time they scroll into view, in either direction. The script adds .rv, so without it the headings simply sit in place. */
 .head h2 { background-size: 220% 100%; background-position: 0% 50%; }
@@ -167,10 +170,10 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 @media (max-width: 520px) { .typed-line { min-height: 2.9em; } }
 .cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem 1rem; margin-top: 2rem; }
 .pill { display: inline-block; padding: 0.7rem 1.4rem; border-radius: 999px; font-size: 1.0625rem; font-weight: 500; }
-.pill.solid { background: var(--accent); color: #fff; }
+.pill.solid { background: var(--accent); color: var(--on-accent); }
 .pill.solid:hover { text-decoration: none; filter: brightness(1.08); }
 .pill.ghost { color: var(--accent); border: 1px solid var(--accent); }
-.pill.ghost:hover { text-decoration: none; background: var(--accent); color: #fff; }
+.pill.ghost:hover { text-decoration: none; background: var(--accent); color: var(--on-accent); }
 
 /* Photo slots. Each one shows a placeholder until a file with the matching name exists in the images folder, then the photo replaces it. */
 .ph { position: relative; overflow: hidden; border-radius: 24px; background: var(--bg-alt); aspect-ratio: 21 / 9; max-width: 100%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem; margin-top: 4rem; color: var(--muted); }
@@ -274,7 +277,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .mail { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.6rem 1rem; margin-top: 2.25rem; }
 .mail #email { font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 600; letter-spacing: -0.02em; overflow-wrap: anywhere; }
 .copy { font: inherit; font-size: 0.9375rem; font-weight: 500; color: var(--accent); background: none; border: 1px solid var(--accent); border-radius: 999px; padding: 0.35rem 1rem; cursor: pointer; }
-.copy:hover { background: var(--accent); color: #fff; }
+.copy:hover { background: var(--accent); color: var(--on-accent); }
 .phone { text-align: center; margin: 0.5rem 0 0; font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 600; letter-spacing: -0.02em; }
 .phone a { color: var(--fg); }
 .phone a:hover { color: var(--accent); }
