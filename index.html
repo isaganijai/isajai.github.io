@@ -26,7 +26,7 @@
   --fg: #1d1d1f;
   --muted: #6e6e73;
   --line: #d2d2d7;
-  --accent: #1d1d1f;
+  --accent: #b45309;
   --on-accent: #ffffff;
   --nav: rgba(251, 251, 253, 0.82);
   --term-bg: #1d1d1f;
@@ -47,8 +47,8 @@
     --fg: #f5f5f7;
     --muted: #a1a1a6;
     --line: #38383d;
-    --accent: #f5f5f7;
-    --on-accent: #000000;
+    --accent: #ffb36b;
+    --on-accent: #1a1206;
     --nav: rgba(0, 0, 0, 0.72);
     --term-bg: #0a0a0b;
     --g1: linear-gradient(145deg, #1f2a37, #10161e);
@@ -63,8 +63,8 @@
   --fg: #f5f5f7;
   --muted: #a1a1a6;
   --line: #38383d;
-  --accent: #f5f5f7;
-  --on-accent: #000000;
+  --accent: #ffb36b;
+  --on-accent: #1a1206;
   --nav: rgba(0, 0, 0, 0.72);
   --term-bg: #0a0a0b;
   --g1: linear-gradient(145deg, #1f2a37, #10161e);
@@ -218,6 +218,15 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .rows strong { font-weight: 600; }
 .rows span { color: var(--muted); font-size: 0.9375rem; text-align: left; }
 @media (max-width: 640px) { .rows li { grid-template-columns: minmax(0, 1fr); } }
+
+/* Security section: terminal green accent, only inside #security */
+#security { --sec: #0a7d3e; --w3: #0a7d3e; }
+:root:not([data-theme="light"]) #security { --sec: #3ddc84; --w3: #3ddc84; }
+:root[data-theme="dark"] #security { --sec: #3ddc84; --w3: #3ddc84; }
+#security .eyebrow { color: var(--sec); }
+#security .col { border-top-color: color-mix(in srgb, var(--sec) 55%, var(--line)); }
+#security .col h3 { color: var(--sec); }
+#security .rows strong::before { content: "> "; color: var(--sec); font-family: var(--mono); font-weight: 500; }
 
 /* Music */
 .wave { display: flex; align-items: center; gap: 3px; height: 6rem; margin-top: 4rem; }
