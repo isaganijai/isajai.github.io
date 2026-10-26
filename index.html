@@ -143,15 +143,17 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 :root:not([data-theme="light"]) { --w1: #ffffff; --w2: #c9ccd6; --w3: #8b93a7; }
 :root[data-theme="dark"] { --w1: #ffffff; --w2: #c9ccd6; --w3: #8b93a7; }
 .hero h1, .head h2 { color: var(--fg); background-image: var(--grad); background-size: 150% 100%; background-repeat: no-repeat; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-/* Section headings start slightly low and dim, then rise and sweep their gradient each time they scroll into view, in either direction. The script adds .rv, so without it the headings simply sit in place. */
+/* Section headings start slightly offset and dim, then glide into place (up when scrolling down, down when scrolling up) and sweep their gradient each time they scroll into view, in either direction. The script adds .rv, so without it the headings simply sit in place. */
 .head h2 { background-size: 220% 100%; background-position: 0% 50%; }
 .head h2.rv { opacity: 0.35; transform: translateY(14px); background-position: 100% 50%; transition: opacity 1.5s cubic-bezier(0.25, 0.6, 0.25, 1), transform 1.5s cubic-bezier(0.25, 0.6, 0.25, 1), background-position 2.8s ease; }
+.head h2.rv.from-top { transform: translateY(-14px); }
 .head h2.rv.seen { opacity: 1; transform: none; background-position: 0% 50%; }
 /* Your name above the headline: larger and in full text color instead of the muted label style. */
 .hero .eyebrow { font-size: 1.5rem; font-weight: 400; letter-spacing: -0.01em; color: var(--fg); margin-bottom: 1rem; }
 
 /* Hero entrance: the name and headline rise in one after another when the page opens and again whenever the visitor scrolls back to the top. */
 .hero.rvh .eyebrow, .hero.rvh h1 { opacity: 0.35; transform: translateY(14px); transition: opacity 1.5s cubic-bezier(0.25, 0.6, 0.25, 1), transform 1.5s cubic-bezier(0.25, 0.6, 0.25, 1); }
+.hero.rvh.from-top .eyebrow, .hero.rvh.from-top h1 { transform: translateY(-14px); }
 .hero.rvh.seen .eyebrow, .hero.rvh.seen h1 { opacity: 1; transform: none; }
 .hero.rvh.seen h1 { transition-delay: 0.15s; }
 @media (prefers-reduced-motion: no-preference) { .hero h1 { animation: drift 26s ease-in-out infinite alternate; } }
@@ -270,6 +272,7 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
 .shot.c { background: var(--g3); }
 .shot img, .shot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .yt { text-align: center; margin: 1.75rem 0 0; }
+.yt .pill { padding: 0.4rem 1.05rem; font-size: 0.875rem; }
 .shot-link { position: absolute; inset: 0; z-index: 3; border-radius: inherit; }
 .shot-link:focus-visible { outline-offset: -4px; }
 .shot .watch { margin-top: 0.4rem; color: var(--accent); font-weight: 500; }
@@ -549,15 +552,15 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
       <div class="cols">
         <div class="col">
           <h3>Photography</h3>
-          <p>Live music, portraits, events and product shots.</p>
+          <p>Everyday life, travel and action, caught in the moment.</p>
         </div>
         <div class="col">
           <h3>Videography</h3>
-          <p>Short films, music videos and event recaps in 4K at 24 fps.</p>
+          <p>Short clips and full videos of the moments worth keeping.</p>
         </div>
         <div class="col">
           <h3>Editing</h3>
-          <p>Cutting, color grading and sound design for finished video.</p>
+          <p>Cutting, color grading and sound mixing for a finished look.</p>
         </div>
         <div class="col">
           <h3>Delivery</h3>
@@ -649,7 +652,10 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
     heroEl.classList.add('rvh');
     void heroEl.offsetWidth;
     new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { e.target.classList.toggle('seen', e.isIntersecting); });
+      entries.forEach(function (e) {
+        e.target.classList.toggle('seen', e.isIntersecting);
+        if (!e.isIntersecting) e.target.classList.toggle('from-top', e.boundingClientRect.top < 0);
+      });
     }, { threshold: 0.4 }).observe(heroEl);
   }
 
@@ -691,7 +697,11 @@ a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
     var headObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) e.target.classList.add('seen');
-        else e.target.classList.remove('seen');
+        else {
+          e.target.classList.remove('seen');
+          /* Left through the top: next entrance is from above, so it slides down. */
+          e.target.classList.toggle('from-top', e.boundingClientRect.top < 0);
+        }
       });
     }, { threshold: 0.35 });
     headings.forEach(function (h) { h.classList.add('rv'); headObserver.observe(h); });
